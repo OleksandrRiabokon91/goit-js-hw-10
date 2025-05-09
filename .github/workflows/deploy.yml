@@ -10,20 +10,21 @@ jobs:
 
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4 # обновлённая версия
+        uses: actions/checkout@v2 # Проверяем код из репозитория
 
       - name: Setup Node.js ⚙️
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # укажи стабильную версию Node.js, с которой работает vite
+          node-version: 18 # Указываем стабильную версию Node.js
 
-      - name: Install and Build 🔧
+      - name: Install dependencies 🔧
         run: |
-          npm ci                   # чище, быстрее и стабильнее, чем npm install
-          npm run build
+          npm ci  # Устанавливаем зависимости
+
+      - name: Build project 🔨
+        run: |
+          npm run build  # Собираем проект
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4 # без подверсии — всегда последняя 4.x
-        with:
-          branch: gh-pages
-          folder: dist
+        run: |
+          npm run deploy  # Запускаем деплой через gh-pages
