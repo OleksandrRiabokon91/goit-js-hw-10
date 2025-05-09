@@ -2,29 +2,22 @@ name: Build and deploy to GitHub Pages
 
 on:
   push:
-    branches: [main] # Запуск при пуше в ветку main
+    branches: [main]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2 # Проверяем код из репозитория
+        uses: actions/checkout@v2.3.1
 
-      - name: Setup Node.js ⚙️
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18 # Указываем стабильную версию Node.js
-
-      - name: Install dependencies 🔧
+      - name: Install and build 🔧
         run: |
-          npm ci  # Устанавливаем зависимости
-
-      - name: Build project 🔨
-        run: |
-          npm run build  # Собираем проект
+          npm install
+          npm run build
 
       - name: Deploy 🚀
-        run: |
-          npm run deploy  # Запускаем деплой через gh-pages
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: dist
